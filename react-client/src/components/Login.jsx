@@ -3,31 +3,18 @@ import React from 'react';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      name: '',
-      email: ''
-    }
     this.handleChange = this.handleChange.bind(this)
   }
   
-  handleSubmit(e) {
-    e.preventDefault()
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
   handleChange(e) {
     e.preventDefault()
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    this.props.handleChange(e)
   }
-  
+
   render () {
     return (
       <div>
-        <form>
+        <form onSubmit={this.props.handleSubmit} >
           <label>
             Name:
             <input type="text" name="name" onChange={this.handleChange} />
