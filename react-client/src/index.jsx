@@ -9,11 +9,17 @@ class App extends React.Component {
     super(props);
     this.state = { 
       submitted: false,
-      name: '',
-      email: ''
+      exercise: false,
+      salad: false,
+      hamburger: false,
+      pho: false,
+      eggrolls: false,
+      potatoes: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleCheckBox = this.handleCheckBox.bind(this)
+    this.handleDropDown = this.handleDropDown.bind(this)
   }
 
   // componentDidMount() {
@@ -45,6 +51,19 @@ class App extends React.Component {
     })
   }
 
+  handleDropDown(e) {
+    e.preventDefault()
+    this.setState({
+      [e.target.name]: true
+    })
+  }
+
+  handleCheckBox(e) {
+    this.setState({
+      [e.target.name]: true
+    })   
+  }
+
   render () {
     if (this.state.submitted === false) {
       return (
@@ -57,7 +76,12 @@ class App extends React.Component {
       )
     } else {
       return (
-        <Form />
+        <Form 
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          handleCheckBox={this.handleCheckBox}
+          handleDropDown={this.handleDropDown}
+        />
       )
     }
   }
