@@ -11,11 +11,11 @@ class Login extends React.Component {
     this.props.handleChange(e)
   }
 
-  
   render () {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit} >
+        <h4>Log in:</h4>
+        <form onSubmit={this.props.submitLogIn} >
           <label>
             Name:
             <input type="text" name="name" onChange={this.handleChange} />

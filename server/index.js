@@ -1,18 +1,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var items = require('../database-mongo');
+var users = require('../database-mongo');
 
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 
-app.get('/items', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
+app.post('/users', (req, res) => {
+  console.log('req.body: ', req.body)
+  users.selectAll((err, data) => {
+    if (err) {
+      res.sendStatus(201);
     } else {
-      res.json(data);
+      res.sendStatus(500);
     }
   });
 });

@@ -26,17 +26,17 @@ class Form extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit}>
+        <form onSubmit={this.props.submitForm}>
           <label>
-            Current BG:
+            Current BG: <br/>
             <input type="number" name="currentBG" onChange={this.handleChange} /> mg/dl
           </label><br/><br/>
           <label>
-            Insulin/Carb Ratio:  (1 unit : ? carbs) 
+            Insulin/Carb Ratio:  (1 unit : ? carbs) <br/>
             <input type="number" name="insulinCarbRatio" onChange={this.handleChange} />
           </label><br/><br/>
           <label>
-            Exercising sooon? 
+            Exercising sooon? <br/>
             <select name="exercise" onChange={this.handleDropDown} >
               <option>No</option>
               <option>Yes</option>
