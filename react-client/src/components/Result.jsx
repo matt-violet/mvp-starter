@@ -10,7 +10,10 @@ class Result extends React.Component {
     return (
       <div>
         <h4>Nutrition Information:</h4>
-        <FoodItems state={this.props.state}/>
+        <FoodItems 
+          state={this.props.state}
+          addFoodsToState={this.props.addFoodsToState}  
+        />
         <h4>Bolus Amount:</h4>
       </div>
     )

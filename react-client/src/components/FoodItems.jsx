@@ -6,6 +6,7 @@ class FoodItems extends React.Component {
     this.state = {
       foods: []
     }
+    this.createFoodArr = this.createFoodArr.bind(this)
   }
 
   createFoodArr(state) {
@@ -29,6 +30,8 @@ class FoodItems extends React.Component {
 
   componentDidMount() {
     this.createFoodArr(this.props.state);
+    console.log('result.state.foods: ', this.state.foods)
+    this.props.addFoodsToState(this.state.foods)
   }
 
   render() {

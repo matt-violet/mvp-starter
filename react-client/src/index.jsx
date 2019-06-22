@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Login from './components/Login.jsx';
 import Form from './components/Form.jsx';
 import Result from './components/Result.jsx';
+import foodData from '../../database-mongo/data.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,8 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleCheckBox = this.handleCheckBox.bind(this)
     this.handleDropDown = this.handleDropDown.bind(this)
+    this.addFoodsToState = this.addFoodsToState.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   submitLogIn(e) {
@@ -49,6 +52,31 @@ class App extends React.Component {
       [e.target.name]: !this.state[e.target.name]
     })   
   }
+
+  addFoodsToState(foods) {
+    console.log('addFoods to index state: ', foods)
+    this.setState({
+      foods: foods
+    })
+  }
+
+  seedFoodData() {
+    $.ajax({
+      type: 'POST',
+      url: '/foods',
+      data: foodData,
+      success: (data) => {
+        console.log('POST successful: ', data)
+      },
+      error: (err) => {
+        console.log('Error: ', err)
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.seedFoodData()
+  }
   
   submitForm(e) {
     e.preventDefault()
@@ -56,18 +84,18 @@ class App extends React.Component {
       [e.target.name]: e.target.value,
       formSubmitted: true
     }) 
-    var that = this;
-    $.ajax({
-      type: 'POST',
-      url: '/users',
-      data: that.state,
-      success: (data) => {
-        console.log('POST successful')
-      },
-      error: (err) => {
-        console.log('Error')
-      }
-    })
+    // var that = this;
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/users',
+    //   data: that.state,
+    //   success: (data) => {
+    //     console.log('POST successful')
+    //   },
+    //   error: (err) => {
+    //     console.log('Error')
+    //   }
+    // })
   }
 
   render () {
@@ -84,6 +112,7 @@ class App extends React.Component {
       return (
         <Result 
           state={this.state}
+          addFoodsToState={this.addFoodsToState}
         />
       )
     } else {

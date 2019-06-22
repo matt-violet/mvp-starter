@@ -1,31 +1,46 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+// mongo, show dbs, use foods
+// db.foods.find({});
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/foods', { useNewUrlParser: true });
 
 var db = mongoose.connection;
 
-db.on('error', function() {
-  console.log('mongoose connection error');
+db.on('error', function() {console.log('mongoose connection error')});
+db.once('open', function() {console.log('mongoose connected successfully')});
+
+// schema
+const foodSchema = mongoose.Schema({
+  name: String,
+  carbs: Number,
+  fat: Number,
+  fiber: Number,
+  protein: Number
 });
 
-db.once('open', function() {
-  console.log('mongoose connected successfully');
-});
+// model
+const Food = mongoose.model('Food', foodSchema);
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
-});
-
-var Item = mongoose.model('Item', itemSchema);
-
-var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, items);
-    }
-  });
+// seed db
+var addFood = (req, res) => {
+  var foodData = req.body.foodData;
+  console.log('foodData.salad: ', foodData.salad)
+  for (var food in foodData) {
+    var newFood = new Food(foodData[food])
+    Food.create(newFood, (err) => {
+      if (err) {
+        // res.sendStatus(500);
+        console.log('error: ', err);
+      } else {
+        // res.sendStatus(201)
+        console.log('saved to db');
+      }
+    });
+  }
 };
 
-module.exports.selectAll = selectAll;
+module.exports = {
+  db,
+  Food,
+  addFood
+};
