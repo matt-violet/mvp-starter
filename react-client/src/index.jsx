@@ -54,13 +54,13 @@ class App extends React.Component {
   }
 
   addFoodsToState(foods) {
-    console.log('addFoods to index state: ', foods)
     this.setState({
       foods: foods
     })
   }
 
-  seedFoodData() {
+  componentDidMount() {
+    // seed db
     $.ajax({
       type: 'POST',
       url: '/foods',
@@ -73,17 +73,29 @@ class App extends React.Component {
       }
     })
   }
-
-  componentDidMount() {
-    this.seedFoodData()
-  }
   
   submitForm(e) {
     e.preventDefault()
     this.setState({
       [e.target.name]: e.target.value,
-      formSubmitted: true
+      formSubmitted: true,
     }) 
+    var foodsArr = [];
+    for (var key in this.state) {
+      if (key !== 'currentBG' && 
+        key !== 'email' && 
+        key !== 'exercise' && 
+        key !==  'formSubmitted' && 
+        key !== 'insulinCarbRatio' &&
+        key !== 'loggedIn' &&
+        key !== 'name' &&
+        this.state[key] === true) {
+          foodsArr.push(key)
+      }
+    }
+    this.setState({
+      foods: foodsArr
+    })
     // var that = this;
     // $.ajax({
     //   type: 'POST',
