@@ -28,9 +28,9 @@ var addFood = (req, res) => {
     var newFood = new Food(foodData[food])
     Food.create(newFood, (err) => {
       if (err) {
-        res.sendStatus(500)
+        res.send(err)
       } else {
-        res.sendStatus(201)
+        res.json
       }
     });
   }
@@ -42,7 +42,7 @@ var getFood = (callback) => {
     if (err) {
       callback(err)
     } else {
-      callback(food)
+      callback(null, food)
     }
   })
 }

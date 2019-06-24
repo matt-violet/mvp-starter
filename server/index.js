@@ -11,7 +11,15 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 
 app.post('/foods', addFood);
-app.get('/foods', getFood);
+app.get('/foods', (req, res) => {
+  getFood((err, data) => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.send(data)
+    }
+  })
+});
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

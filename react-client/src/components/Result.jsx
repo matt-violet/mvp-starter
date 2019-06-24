@@ -1,5 +1,5 @@
 import React from 'react';
-import FoodItems from './FoodItems.jsx';
+import FoodNutrition from './FoodNutrition.jsx';
 import foodData from '../../../database-mongo/data.js';
 import $ from 'jquery';
 
@@ -16,13 +16,13 @@ class Result extends React.Component {
   }
 
   componentDidMount() {
-    // $.ajax({
-    //   type: 'GET',
-    //   url: '/foods',
-    //   success: (data) => {
-    //     console.log('GOT DATA: ', data)
-    //   }
-    // })
+    $.ajax({
+      type: 'GET',
+      url: '/foods',
+      success: (data) => {
+        console.log('GOT DATA: ', data)
+      }
+    })
     this.calculateTotals()
   }
 
@@ -52,26 +52,36 @@ class Result extends React.Component {
       return (
         <div>
           <h4>Nutrition Information:</h4>
-          <FoodItems state={this.props.state} />
+          <FoodNutrition state={this.props.state} />
           Total Carbs: {this.state.totalCarbs} <br/>
           Total Fat: {this.state.totalFat} <br/>
           Total Fiber: {this.state.totalFiber} <br/>
           Total Protein: {this.state.totalProtein}
+          <br/><br/>
+          ---------------------------------------------          
           <h4>Bolus Amount:</h4>
-          {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} u<br/><br/>
+          Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction <br/>
+          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction}
+          <br/><br/>
+          Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
         </div>
       )   
     } else {
       return (
         <div>
           <h4>Nutrition Information:</h4>
-          <FoodItems state={this.props.state} />
+          <FoodNutrition state={this.props.state} />
           Total Carbs: {this.state.totalCarbs} <br/>
           Total Fat: {this.state.totalFat} <br/>
           Total Fiber: {this.state.totalFiber} <br/>
           Total Protein: {this.state.totalProtein}
+          <br/><br/>
+          ---------------------------------------------
           <h4>Bolus Amount:</h4>
-          {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} u<br/><br/>     
+          Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction<br/>
+          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction}
+          <br/><br/>
+          Bolus = (({this.state.totalCarbs} - (.5 * {this.state.totalFiber}) + (.5 * {this.state.totalProtein})) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction}
           50% now, 50% over two hours
         </div>
       )   

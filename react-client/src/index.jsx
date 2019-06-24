@@ -11,6 +11,7 @@ class App extends React.Component {
     super(props);
     this.state = { 
       loggedIn: false,
+      askForServings: false,
       exercise: false,
       salad: false,
       hamburger: false,
@@ -49,21 +50,29 @@ class App extends React.Component {
   
   handleCheckBox(e) {
     this.setState({
-      [e.target.name]: !this.state[e.target.name]
+      [e.target.name]: !this.state[e.target.name],
+      askForServings: true
     })   
   }
 
   // seed db
   componentDidMount() {
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/foods',
-    //   data: foodData,
-    //   success: () => {
-    //     console.log('Seeded database')
-    //     return;
-    //   }
-    // })
+    var foodsArr = [];
+    for (var key in foodData.foodData) {
+      foodsArr.push(key)
+    }
+    this.setState({
+      foodOptions: foodsArr
+    })
+    $.ajax({
+      type: 'POST',
+      url: '/foods',
+      data: foodData,
+      success: () => {
+        console.log('Seeded database')
+        return;
+      }
+    })
   }
   
   submitForm(e) {
@@ -81,6 +90,7 @@ class App extends React.Component {
         key !== 'insulinCarbRatio' &&
         key !== 'loggedIn' &&
         key !== 'name' &&
+        key !== 'askForServings' &&
         this.state[key] === true) {
           foodsArr.push(key)
       }
@@ -110,6 +120,7 @@ class App extends React.Component {
       return (
         <Form 
           name={this.state.name}
+          state={this.state}
           handleChange={this.handleChange}
           submitForm={this.submitForm}
           handleCheckBox={this.handleCheckBox}

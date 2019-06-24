@@ -1,7 +1,7 @@
 import React from 'react';
 import foodData from '../../../database-mongo/data.js';
 
-class FoodItems extends React.Component {
+class FoodNutrition extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -26,4 +26,4 @@ class FoodItems extends React.Component {
   }
 }
 
-export default FoodItems;
+export default FoodNutrition;
