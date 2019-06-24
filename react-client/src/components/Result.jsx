@@ -61,7 +61,11 @@ class Result extends React.Component {
   render() {
     if (!this.state.mounted) {
       return (
-        <div>Loading nutrition info...</div>
+        <div>
+          <div>Loading nutrition info...</div>
+          <br/><br/><br/>
+          <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/puqOb74.jpg" title="source: imgur.com" width="300px" /></a>
+        </div>
       )
     } else if (this.state.totalFat < 20) {
       return (
@@ -79,6 +83,8 @@ class Result extends React.Component {
           Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
           <br/><br/>
           Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
+          <br/><br/><br/>
+          <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/RendzFo.jpg" title="source: imgur.com" width="300px" /></a>
         </div>
       )   
     } else {
@@ -98,6 +104,8 @@ class Result extends React.Component {
           <br/><br/>
           Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
           50% now, 50% over two hours
+          <br/><br/><br/>
+          <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/RendzFo.jpg" title="source: imgur.com" width="300px" /></a>
         </div>
       )   
     }

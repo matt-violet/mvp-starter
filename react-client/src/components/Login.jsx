@@ -26,6 +26,8 @@ class Login extends React.Component {
           </label><br/><br/>
           <input type="Submit" defaultValue="Login" />
         </form>
+        <br/><br/><br/><br/>
+        <a href="https://imgur.com/bKhl4L4"><img src="https://i.imgur.com/bKhl4L4.jpg" title="source: imgur.com" width="300px" /></a>
       </div>
     );
   }
