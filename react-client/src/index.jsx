@@ -65,7 +65,7 @@ class App extends React.Component {
       foodOptions: foodsArr
     })
     $.ajax({
-      type: 'POST',
+      type: 'PUT',
       url: '/foods',
       data: foodData,
       success: () => {

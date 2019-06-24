@@ -1,12 +1,12 @@
 import React from 'react';
 import FoodNutrition from './FoodNutrition.jsx';
-import foodData from '../../../database-mongo/data.js';
 import $ from 'jquery';
 
 class Result extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      foods: [],
       totalCarbs: 0,
       totalFat: 0,
       totalFiber: 0,
@@ -15,15 +15,26 @@ class Result extends React.Component {
     }
   }
 
+  // find selected food data and save to in state.foods
   componentDidMount() {
     $.ajax({
       type: 'GET',
       url: '/foods',
       success: (data) => {
-        console.log('GOT DATA: ', data)
+        var foodsToAdd = {};
+        for (var i = 0; i < data.length; i++) {
+          if (this.props.state.foods.includes(data[i].name)) {
+            foodsToAdd[data[i].name] = data[i]
+          }
+        }
+        this.setState({
+          foods: foodsToAdd,
+          mounted: true
+        }, () => {
+          this.calculateTotals()
+        })
       }
     })
-    this.calculateTotals()
   }
 
   calculateTotals() {
@@ -33,10 +44,10 @@ class Result extends React.Component {
     var totalProtein = 0;
     var foods = this.props.state.foods;
     for (var i = 0; i < foods.length; i++) {
-      totalCarbs += foodData.foodData[foods[i]].carbs
-      totalFat += foodData.foodData[foods[i]].fat
-      totalFiber += foodData.foodData[foods[i]].fiber
-      totalProtein += foodData.foodData[foods[i]].protein
+      totalCarbs += this.state.foods[foods[i]].carbs
+      totalFat += this.state.foods[foods[i]].fat
+      totalFiber += this.state.foods[foods[i]].fiber
+      totalProtein += this.state.foods[foods[i]].protein
     }
     this.setState({
       totalCarbs: totalCarbs,
@@ -48,7 +59,11 @@ class Result extends React.Component {
   }
 
   render() {
-    if (this.state.totalFat < 20) {
+    if (!this.state.mounted) {
+      return (
+        <div>Loading nutrition info...</div>
+      )
+    } else if (this.state.totalFat < 20) {
       return (
         <div>
           <h4>Nutrition Information:</h4>
@@ -61,7 +76,7 @@ class Result extends React.Component {
           ---------------------------------------------          
           <h4>Bolus Amount:</h4>
           Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction <br/>
-          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction}
+          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
           <br/><br/>
           Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
         </div>
@@ -79,9 +94,9 @@ class Result extends React.Component {
           ---------------------------------------------
           <h4>Bolus Amount:</h4>
           Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction<br/>
-          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction}
+          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
           <br/><br/>
-          Bolus = (({this.state.totalCarbs} - (.5 * {this.state.totalFiber}) + (.5 * {this.state.totalProtein})) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction}
+          Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
           50% now, 50% over two hours
         </div>
       )   

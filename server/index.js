@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 
-app.post('/foods', addFood);
+app.put('/foods', addFood);
 app.get('/foods', (req, res) => {
   getFood((err, data) => {
     if (err) {

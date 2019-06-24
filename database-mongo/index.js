@@ -26,7 +26,7 @@ var addFood = (req, res) => {
   var foodData = req.body.foodData;
   for (var food in foodData) {
     var newFood = new Food(foodData[food])
-    Food.create(newFood, (err) => {
+    Food.findByIdAndUpdate({name: newFood.name}, (err) => {
       if (err) {
         res.send(err)
       } else {
