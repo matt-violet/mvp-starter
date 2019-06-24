@@ -16,6 +16,7 @@ class App extends React.Component {
       hamburger: false,
       pho: false,
       eggrolls: false,
+      chicken: false,
       potatoes: false
     }
     this.submitLogIn = this.submitLogIn.bind(this)
@@ -23,7 +24,6 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleCheckBox = this.handleCheckBox.bind(this)
     this.handleDropDown = this.handleDropDown.bind(this)
-    this.addFoodsToState = this.addFoodsToState.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this)
   }
 
@@ -53,25 +53,17 @@ class App extends React.Component {
     })   
   }
 
-  addFoodsToState(foods) {
-    this.setState({
-      foods: foods
-    })
-  }
-
+  // seed db
   componentDidMount() {
-    // seed db
-    $.ajax({
-      type: 'POST',
-      url: '/foods',
-      data: foodData,
-      success: (data) => {
-        console.log('POST successful: ', data)
-      },
-      error: (err) => {
-        console.log('Error: ', err)
-      }
-    })
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/foods',
+    //   data: foodData,
+    //   success: () => {
+    //     console.log('Seeded database')
+    //     return;
+    //   }
+    // })
   }
   
   submitForm(e) {
@@ -96,18 +88,6 @@ class App extends React.Component {
     this.setState({
       foods: foodsArr
     })
-    // var that = this;
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/users',
-    //   data: that.state,
-    //   success: (data) => {
-    //     console.log('POST successful')
-    //   },
-    //   error: (err) => {
-    //     console.log('Error')
-    //   }
-    // })
   }
 
   render () {
@@ -120,16 +100,16 @@ class App extends React.Component {
           />
         </div>
       )
-    } else if (this.state.loggedIn === true && this.state.formSubmitted === true) {
+    } else if (this.state.loggedIn === true && this.state.foods) {
       return (
         <Result 
           state={this.state}
-          addFoodsToState={this.addFoodsToState}
         />
       )
     } else {
       return (
         <Form 
+          name={this.state.name}
           handleChange={this.handleChange}
           submitForm={this.submitForm}
           handleCheckBox={this.handleCheckBox}

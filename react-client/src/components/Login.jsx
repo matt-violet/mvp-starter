@@ -24,7 +24,7 @@ class Login extends React.Component {
             Email:
             <input type="email" name="email" onChange={this.handleChange} />
           </label><br/><br/>
-          <input type="Submit" value="Login" />
+          <input type="Submit" defaultValue="Login" />
         </form>
       </div>
     );

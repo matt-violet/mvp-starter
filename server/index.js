@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-const {addFood} = require('../database-mongo/index.js');
+const {addFood, getFood} = require('../database-mongo/index.js');
 
 var app = express();
 
@@ -11,8 +11,8 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 
 app.post('/foods', addFood);
+app.get('/foods', getFood);
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
-

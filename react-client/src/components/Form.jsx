@@ -26,6 +26,8 @@ class Form extends React.Component {
   render() {
     return (
       <div>
+        <h4>Welcome, {this.props.name}!</h4>
+        <p>Please provide the following information:</p>
         <form onSubmit={this.props.submitForm}>
           <label>
             Current BG: <br/>
@@ -33,10 +35,14 @@ class Form extends React.Component {
           </label><br/><br/>
           <label>
             Insulin/Carb Ratio:  (1 unit : ? carbs) <br/>
-            <input type="number" name="insulinCarbRatio" onChange={this.handleChange} />
+            <input type="number" name="insulinCarbRatio" onChange={this.handleChange} required />
           </label><br/><br/>
           <label>
-            Exercising sooon? <br/>
+            Correction Factor (1u : ? mg/dl) <br/>
+            <input type="number" name="correctionFactor" onChange={this.handleChange} required />
+          </label><br/><br/>
+          <label>
+            Exercising soon? <br/>
             <select name="exercise" onChange={this.handleDropDown} >
               <option>No</option>
               <option>Yes</option>

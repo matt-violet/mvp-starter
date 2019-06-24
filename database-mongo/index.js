@@ -24,23 +24,33 @@ const Food = mongoose.model('Food', foodSchema);
 // seed db
 var addFood = (req, res) => {
   var foodData = req.body.foodData;
-  console.log('foodData.salad: ', foodData.salad)
   for (var food in foodData) {
     var newFood = new Food(foodData[food])
     Food.create(newFood, (err) => {
       if (err) {
-        // res.sendStatus(500);
-        console.log('error: ', err);
+        res.sendStatus(500)
       } else {
-        // res.sendStatus(201)
-        console.log('saved to db');
+        res.sendStatus(201)
       }
     });
   }
 };
 
+var getFood = (callback) => {
+  console.log('getting food')
+  Food.find({}, (err, food) => {
+    if (err) {
+      callback(err)
+    } else {
+      callback(food)
+    }
+  })
+}
+
+
 module.exports = {
   db,
   Food,
-  addFood
+  addFood,
+  getFood
 };
