@@ -67,7 +67,7 @@ class Result extends React.Component {
           <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/puqOb74.jpg" title="source: imgur.com" width="300px" /></a>
         </div>
       )
-    } else if (this.state.totalFat < 20) {
+    } else if (this.state.totalFat < 20 && !this.props.state.exercise) {
       return (
         <div>
           <h4>Nutrition Information:</h4>
@@ -82,12 +82,12 @@ class Result extends React.Component {
           Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction <br/>
           Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
           <br/><br/>
-          Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
+          ***Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units***<br/><br/>
           <br/><br/><br/>
           <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/RendzFo.jpg" title="source: imgur.com" width="300px" /></a>
         </div>
       )   
-    } else {
+    } else if (this.state.totalFat >= 20 && !this.props.state.exercise) {
       return (
         <div>
           <h4>Nutrition Information:</h4>
@@ -102,8 +102,51 @@ class Result extends React.Component {
           Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction<br/>
           Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
           <br/><br/>
-          Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units<br/><br/>
-          50% now, 50% over two hours
+          ***Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units***<br/><br/>
+          *High fat content: Take 50% now, 50% over two hours
+          <br/><br/><br/>
+          <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/RendzFo.jpg" title="source: imgur.com" width="300px" /></a>
+        </div>
+      )   
+    } else if (this.state.totalFat < 20 && this.props.state.exercise) {
+      return (
+        <div>
+          <h4>Nutrition Information:</h4>
+          <FoodNutrition state={this.props.state} />
+          Total Carbs: {this.state.totalCarbs} <br/>
+          Total Fat: {this.state.totalFat} <br/>
+          Total Fiber: {this.state.totalFiber} <br/>
+          Total Protein: {this.state.totalProtein}
+          <br/><br/>
+          ---------------------------------------------          
+          <h4>Bolus Amount:</h4>
+          Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction <br/>
+          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
+          <br/><br/>
+          ***Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units***<br/>
+          *Exercising soon: Consider reducing bolus depending on intensity of exercise
+          <br/><br/><br/>
+          <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/RendzFo.jpg" title="source: imgur.com" width="300px" /></a>
+        </div>
+      )   
+    } else if (this.state.totalFat >= 20 && this.props.state.exercise) {
+      return (
+        <div>
+          <h4>Nutrition Information:</h4>
+          <FoodNutrition state={this.props.state} />
+          Total Carbs: {this.state.totalCarbs} <br/>
+          Total Fat: {this.state.totalFat} <br/>
+          Total Fiber: {this.state.totalFiber} <br/>
+          Total Protein: {this.state.totalProtein}
+          <br/><br/>
+          ---------------------------------------------
+          <h4>Bolus Amount:</h4>
+          Bolus = ((carbs - fiber/2 + protein/2) * insulin/carb ratio) + correction<br/>
+          Bolus = (({this.state.totalCarbs} - ({this.state.totalFiber}/2) + ({this.state.totalProtein}/2)) * (1 / {this.props.state.insulinCarbRatio})) + {this.state.correction.toFixed(2)}
+          <br/><br/>
+          ***Bolus = {(((this.state.totalCarbs - (.5 * this.state.totalFiber) + (.5 * this.state.totalProtein)) * (1 / this.props.state.insulinCarbRatio)) + this.state.correction).toFixed(2)} units***<br/><br/>
+          *High fat content: Take 50% now, 50% over two hours<br/>
+          *Exercising soon: Consider reducing bolus depending on intensity of exercise
           <br/><br/><br/>
           <a href="https://imgur.com/RendzFo"><img src="https://i.imgur.com/RendzFo.jpg" title="source: imgur.com" width="300px" /></a>
         </div>

@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-const {addFood, getFood} = require('../database-mongo/index.js');
+const {addFood, getFood, saveSearch} = require('../database-mongo/index.js');
 
 var app = express();
 
@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-
+app.put(`/users/:name`, saveSearch);
 app.put('/foods', addFood);
 app.get('/foods', (req, res) => {
   getFood((err, data) => {

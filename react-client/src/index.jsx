@@ -98,6 +98,26 @@ class App extends React.Component {
     this.setState({
       foods: foodsArr
     })
+    var currentBG = this.state.currentBG;
+    var insulinCarbRatio = this.state.insulinCarbRatio;
+    var correctionFactor = this.state.correctionFactor;
+    var exercise = this.state.exercise;
+    var meal = this.state.foods;
+    var search = 'currentBG: ' + currentBG + ', insulin/carb ratio: ' + insulinCarbRatio + ', correction factor: ' + correctionFactor + ', exercise: ' + exercise + ', meal: ' + meal;
+    this.setState({
+      searched: search
+    }, () => {
+      var name = this.state.name;
+      $.ajax({
+        type: 'PUT',
+        url: '/users/' + name,
+        data: this.state,
+        success: () => {
+          console.log('Saved search')
+          return;
+        }
+      })
+    })
   }
 
   render () {

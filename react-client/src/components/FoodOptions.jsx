@@ -20,25 +20,14 @@ class FoodOptions extends React.Component {
   }
 
   render() {
-    // if (!this.props.state.askForServings) {
-      return (
-        <div>
-          {this.state.foods.map(food => {
-            return <div><input type="checkbox" key={food} name={food} onChange={this.props.handleCheckBox} >
-            </input><label>{food}</label></div>
-          })}<br/><br/>
-        </div>
-      )
-    // } else {
-    //   return (
-    //     <div>
-    //       {this.state.foods.map(food => {
-    //         return <div><input type="checkbox" name={food} key={food} onChange={this.props.handleCheckBox} >
-    //         </input><label>{food}</label><br/>ayy</div>
-    //       })}<br/><br/>
-    //     </div>
-    //   )
-    // }
+    return (
+      <div>
+        {this.state.foods.map(food => {
+          return <div key={food}><input type="checkbox" name={food} onChange={this.props.handleCheckBox} >
+          </input><label>{food}</label></div>
+        })}<br/><br/>
+      </div>
+    )
   }
 }
 
