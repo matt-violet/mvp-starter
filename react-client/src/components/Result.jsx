@@ -15,7 +15,6 @@ class Result extends React.Component {
     }
   }
 
-  // find selected food data and save to in state.foods
   componentDidMount() {
     $.ajax({
       type: 'GET',

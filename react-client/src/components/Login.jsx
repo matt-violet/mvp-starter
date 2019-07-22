@@ -3,11 +3,10 @@ import React from 'react';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
   
   handleChange(e) {
-    e.preventDefault()
     this.props.handleChange(e)
   }
 

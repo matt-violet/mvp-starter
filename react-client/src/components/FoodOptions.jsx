@@ -23,8 +23,11 @@ class FoodOptions extends React.Component {
     return (
       <div>
         {this.state.foods.map(food => {
-          return <div key={food}><input type="checkbox" name={food} onChange={this.props.handleCheckBox} >
-          </input><label>{food}</label></div>
+          return <div key={food}>
+            <input type="checkbox" name={food} onChange={this.props.handleCheckBox} >
+            </input>
+            <label>{food}</label>
+          </div>
         })}<br/><br/>
       </div>
     )
