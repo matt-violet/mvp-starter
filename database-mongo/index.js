@@ -1,6 +1,3 @@
-// mongo, show dbs, use foods
-// db.foods.find({});
-
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/foods', { useNewUrlParser: true });
 mongoose.connect('mongodb://localhost/users', { useNewUrlParser: true });
